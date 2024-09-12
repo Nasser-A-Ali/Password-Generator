@@ -8,6 +8,18 @@ const uppercase_letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 const numbers = "0123456789";
 const symbols = "!@#$%^&*()_+-=[]{}|;:,.<>?";
 
+// Define the valid flags that can be passed to the program
+const validFlags = [
+  "--length",
+  "--uppercase",
+  "--numbers",
+  "--symbols",
+  "--help",
+  "-h",
+  "help",
+  "help",
+];
+
 // Get the user arguments
 const userArguments = process.argv.slice(2);
 
@@ -31,9 +43,40 @@ Output:
   `);
 }
 
-if (userArguments.includes("--help")) {
+if (userArguments.includes("--help") || userArguments.includes("-h")) {
   printHelpMessage();
   return;
+}
+
+// Checks arguments for validity
+for (let i = 0; i < userArguments.length; i++) {
+  if (
+    !validFlags.includes(userArguments[i]) &&
+    isNaN(Number(userArguments[i]))
+  ) {
+    // Check if the user provided an invalid flag
+    console.log(
+      `Invalid flag: ${userArguments[i]}. Use --help for usage information.`
+    );
+    return;
+  } else if (!isNaN(userArguments[i]) && userArguments[i - 1] !== "--length") {
+    // Check if the user provided a number without the --length flag
+    console.log(
+      `Invalid argument: ${userArguments[i]}. Numbers must be preceded by --length flag. Use --help for usage information.`
+    );
+    return;
+  } else if (userArguments.indexOf(userArguments[i]) !== i) {
+    // Check for duplicate flags
+    console.log(
+      `Duplicate flag: ${userArguments[i]}. Use --help for usage information.`
+    );
+    return;
+  }
+}
+
+if (userArguments.length === 0) {
+  console.log(`
+    No arguments provided. A password will be generated with the default settings.`);
 }
 
 // Set the default length and modifiers
@@ -96,7 +139,9 @@ function generatePassword(length, character_list) {
 function printPassword() {
   console.log(`
         Requested password length: ${length}
-        Selected modifiers: ${modifiers.join(", ")}
+        Selected modifiers: ${
+          modifiers.length === 0 ? "none" : modifiers.join(", ")
+        }
         Generated password: ${generatePassword(length, character_list)}
         `);
 }
