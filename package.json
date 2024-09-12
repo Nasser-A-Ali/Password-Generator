@@ -1,0 +1,22 @@
+{
+  "name": "password-generator",
+  "version": "1.0.0",
+  "description": "Generates a password based on arguments provided via flags",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "bin": {
+    "password-generator": "./index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nasser-A-Ali/Password-Generator.git"
+  },
+  "author": "Nasser Ali",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Nasser-A-Ali/Password-Generator/issues"
+  },
+  "homepage": "https://github.com/Nasser-A-Ali/Password-Generator#readme"
+}
