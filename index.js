@@ -2,13 +2,16 @@
 
 const process = require("node:process");
 
+// Define character lists for the various modifiers
 const lowercase_letters = "abcdefghijklmnopqrstuvwxyz";
 const uppercase_letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 const numbers = "0123456789";
 const symbols = "!@#$%^&*()_+-=[]{}|;:,.<>?";
 
+// Get the user arguments
 const userArguments = process.argv.slice(2);
 
+// Print the help message
 function printHelpMessage() {
   console.log(`
 Usage:
@@ -33,9 +36,11 @@ if (userArguments.includes("--help")) {
   return;
 }
 
+// Set the default length and modifiers
 let length = 8;
 let modifiers = [];
 
+// Check if --length modifier is present and set the length accordingly
 if (userArguments.includes("--length")) {
   const lengthIndex = userArguments.indexOf("--length");
   if (isNaN(userArguments[lengthIndex + 1])) {
@@ -50,9 +55,12 @@ if (userArguments.includes("--length")) {
   }
 }
 
+// Set the character list based on the modifiers
 function setCharacterList() {
+  // Set the default character list to lowercase letters only
   let character_list = lowercase_letters;
 
+  // Check for the presence of modifiers and add their respective character lists to the possible characters
   if (userArguments.includes("--uppercase")) {
     character_list += uppercase_letters;
     modifiers.push("uppercase");
@@ -73,6 +81,7 @@ function setCharacterList() {
 
 const character_list = setCharacterList();
 
+// Generate a password based on the character list and length
 function generatePassword(length, character_list) {
   let password = "";
   for (let i = 0; i < length; i++) {
@@ -83,32 +92,14 @@ function generatePassword(length, character_list) {
   return password;
 }
 
+// Print the user inputs and the generated password to the console
 function printPassword() {
   console.log(`
         Requested password length: ${length}
         Selected modifiers: ${modifiers.join(", ")}
-        Generated password: ${generatePassword(passwordLength, character_list)}
+        Generated password: ${generatePassword(length, character_list)}
         `);
 }
 
-// if (userArguments.includes("--length")) {
-//   const lengthIndex = process.argv.indexOf("--length");
-//   if (!isNaN(userArguments[lengthIndex + 1])) {
-//     if (userArguments[lengthIndex + 1] < 1) {
-//       console.log(
-//         "The length of the password must be either blank (defaulting to 8 characters) or at least 1."
-//       );
-//     } else {
-//       length = process.argv[lengthIndex + 1];
-//     }
-//   }
-// }
-
-const passwordLength = length;
-
-// console.log(userArguments);
-// console.log(passwordLength);
-// console.log(character_list);
-// console.log(generatePassword(passwordLength, character_list));
-
-printPassword(passwordLength);
+// Call the printPassword function
+printPassword(length);
