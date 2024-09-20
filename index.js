@@ -19,7 +19,7 @@ const validFlags = [
   "--help",
   "-h",
   "help",
-  "help",
+  "--version",
 ];
 
 // Get the user arguments
