@@ -7,6 +7,7 @@ const lowercase_letters = "abcdefghijklmnopqrstuvwxyz";
 const uppercase_letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 const numbers = "0123456789";
 const symbols = "!@#$%^&*()_+-=[]{}|;:,.<>?";
+const greek = "αβγδεζηθικλμνξοπρστυφχψω";
 
 // Define the valid flags that can be passed to the program
 const validFlags = [
@@ -14,6 +15,7 @@ const validFlags = [
   "--uppercase",
   "--numbers",
   "--symbols",
+  "--greek",
   "--help",
   "-h",
   "help",
@@ -33,13 +35,14 @@ Available modifiers:
     --uppercase        Use uppercase letters in the password
     --numbers          Use numbers in the password
     --symbols          Use symbols in the password
+    --greek            Use Greek letters in the password
     --help             Print this help message
 Example:
     password-generator --length 12 --uppercase --numbers
 Output:
     Requested password length: 12
-    Selected modifiers: uppercase, numbers
-    Generated password: 1A2B3C4D5E6
+    Selected modifiers: uppercase, numbers, greek
+    Generated password: 1aβ2cD3eFφgλ
   `);
 }
 
@@ -117,6 +120,11 @@ function setCharacterList() {
   if (userArguments.includes("--symbols")) {
     character_list += symbols;
     modifiers.push("symbols");
+  }
+
+  if (userArguments.includes("--greek")) {
+    character_list += greek;
+    modifiers.push("greek");
   }
 
   return character_list;
